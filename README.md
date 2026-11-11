@@ -39,7 +39,8 @@ The test page is a preview. On a small share of real messages the preview and th
 
 - **Crypto messages without labels.** The rule-based crypto parser reads `Entry:`, `SL:` / `Stop loss:` and `TP1:` / `Target 1:` with a colon. Other crypto layouts can still be read by an AI extractor on the live path, but that result depends on the model, so it is not listed here as a guaranteed format.
 - **Numbered lists without a separator** such as `TP 1 4642`: the index can be mistaken for a price, so the parser does not read it.
-- **Messages that cancel or edit an earlier signal.** Handle these by checking the channel's first signals on a paper or demo account.
+- **Messages that edit an earlier signal.** Handle these by checking the channel's first signals on a paper or demo account.
+- **Cancel messages** such as `Cancel the pending EURUSD buy limit` are never read as a new entry. On MT5 a cancel that names a pending order cancels the bot's waiting order for that symbol; it does not close open positions.
 
 Every parsed signal also passes your bot's risk rules (allowed symbols, position caps, daily loss limit) before an order is placed.
 
